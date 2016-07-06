@@ -2,6 +2,7 @@ var player;
 var score;
 var y=20;
 var x=20;
+
 // var foodcord=[[],[]];
 
 
@@ -10,7 +11,6 @@ function setup(){
     background(0,50,100);
     score=0;
     foodSprites= new Group();
-
     player= createSprite(20,20,x,y);
         
 }
@@ -24,13 +24,13 @@ function setup(){
 // }
 
 function draw(){
+
     var ranx= Math.floor((Math.random() * 1245) + 0);
     var rany= Math.floor((Math.random() * 480) + 0);
-    if (random()>0.97){
-        var food= createSprite(ranx,rany,20,20);
+    if (random()>0.98){
+        var food= createSprite(ranx,rany,17,17);
         foodSprites.add(food);
         // foodcord.add(food.position.x + "," + food.position.y);
- 
         food.draw = function() {
             ellipse(0,0,20,20);
         }
@@ -39,15 +39,20 @@ function draw(){
     foodSprites.overlap(player, function(food) {
         player.width+=1;
         player.height+=1;
+        console.log(player.width,player.height)
+     player.setCollider("rectangle",0,0,player.width,player.height);
         score=score+100;
         removeSprite(food);
             
         })
     player.position.x= mouseX;
     player.position.y= mouseY;
+    player.position.x = constrain(mouseX, player.width/2, width-player.width/2);
+    player.position.y = constrain(mouseY, player.height/2,height-player.height/2);
+ 
 
-textAlign(CENTER);
-text(score, camera.position.x, 100);
+    textAlign(CENTER);
+    text(score, camera.position.x, 100);
  
    
     drawSprites();
