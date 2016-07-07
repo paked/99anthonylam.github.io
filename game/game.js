@@ -12,6 +12,8 @@ function setup(){
     score=0;
     foodSprites= new Group();
     player= createSprite(20,20,x,y);
+    player.maxSpeed = 2;
+    player.friction = 0.99;
         
 }
 
@@ -39,14 +41,15 @@ function draw(){
     foodSprites.overlap(player, function(food) {
         player.width+=1;
         player.height+=1;
-        console.log(player.width,player.height)
      player.setCollider("rectangle",0,0,player.width,player.height);
         score=score+100;
         removeSprite(food);
             
         })
-    player.position.x= mouseX;
-    player.position.y= mouseY;
+  if (mouseIsPressed) {
+    player.attractionPoint(0.0001, mouseX, mouseY);
+    console.log("wrking")
+  }
     player.position.x = constrain(mouseX, player.width/2, width-player.width/2);
     player.position.y = constrain(mouseY, player.height/2,height-player.height/2);
  
