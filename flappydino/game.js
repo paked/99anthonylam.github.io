@@ -40,13 +40,20 @@ function draw(){
         } else{
     background(0);
     player.velocity.y = player.velocity.y + g;
-    num=num+1
-    if (num%67==0){
+    num=num+1;
+    if (num%79==0){
         x=x-200;
         var wall= createSprite(player.position.x-200,height/8,50,120);
         walls.add(wall);
+        //player.height=83, gap needs to be 125px
+        var wall= createSprite(player.position.x-200,height-height/8,50,120);
+        walls.add(wall);
+       
     }
     if (walls.overlap(player)){
+        endgame();
+    }
+    if (player.position.y > height-40){
         endgame();
     }
 
@@ -67,8 +74,8 @@ function endgame(){
 }
 
 function mouseClicked(){
+    console.log(player.height);
     if (isgg){
-        console.log("effFfff");
         player.position.x = width/2;
         player.position.y = height/2;
         walls.removeSprites();
