@@ -40,48 +40,27 @@ function init(){
 	var skyBox = new THREE.Mesh( skyGeometry, skyMaterial );
 	scene.add( skyBox );   
 	
-	var geometry = new THREE.Geometry();
-for( var j = 0; j < Math.PI; j += 2 * Math.PI / 100 ) {
-    var v = new THREE.Vector3( Math.cos( j ), Math.sin( j ), 0 );
-    geometry.vertices.push( v );
-}
+	
+	var waterTexture = new THREE.ImageUtils.loadTexture( 'water.jpg' );
+	waterTexture.wrapS = waterTexture.wrapT = THREE.RepeatWrapping; 
 
-line.setGeometry( geometry );
-line.setGeometry( geometry, function( p ) { return 2; } ); // makes width 2 * lineWidth
-line.setGeometry( geometry, function( p ) { return 1 - p; } ); // makes width taper
-line.setGeometry( geometry, function( p ) { return 2 + Math.sin( 50 * p ); } ); // makes width sinusoidal
-var material = new THREE.MeshLineMaterial();
-var mesh = new THREE.Mesh( line.geometry, material ); // this syntax could definitely be improved!
-scene.add( mesh );
-	
-	
-	
-	
-	
-	
-	
-	
-	
-// 	var waterTexture = new THREE.ImageUtils.loadTexture( 'water.jpg' );
-// 	waterTexture.wrapS = waterTexture.wrapT = THREE.RepeatWrapping; 
-
-// 	this.customUniforms2 = {
-// 		baseTexture: 	{ type: "t", value: waterTexture },
-// 		baseSpeed: 		{ type: "f", value: 1.15 },
-// 		noiseScale:		{ type: "f", value: 0.2 },
-// 		alpha: 			{ type: "f", value: 0.8 },
-// 		time: 			{ type: "f", value: 1.0 }
-// 	};
-// 	var customMaterial2 = new THREE.ShaderMaterial( 
-// 	{
-// 	    uniforms: customUniforms2,
-// 	}   );
-// 	customMaterial2.side = THREE.DoubleSide;
-// 	customMaterial2.transparent = true;
-// 	var flatGeometry = new THREE.PlaneGeometry( 500, 100 );
-//     var surface = new THREE.Mesh( flatGeometry, customMaterial2 );
-// 	surface.position.set(60,50,150);
-// 	scene.add( surface );	
+	this.customUniforms2 = {
+		baseTexture: 	{ type: "t", value: waterTexture },
+		baseSpeed: 		{ type: "f", value: 1.15 },
+		noiseScale:		{ type: "f", value: 0.2 },
+		alpha: 			{ type: "f", value: 0.8 },
+		time: 			{ type: "f", value: 1.0 }
+	};
+	var customMaterial2 = new THREE.ShaderMaterial( 
+	{
+	    uniforms: customUniforms2,
+	}   );
+	customMaterial2.side = THREE.DoubleSide;
+	customMaterial2.transparent = true;
+	var flatGeometry = new THREE.PlaneGeometry( 500, 100 );
+    var surface = new THREE.Mesh( flatGeometry, customMaterial2 );
+	surface.position.set(60,50,150);
+	scene.add( surface );	
     controls= new THREE.OrbitControls(camera, renderer.domElement);
 }
 
